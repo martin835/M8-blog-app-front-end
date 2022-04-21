@@ -4,14 +4,33 @@ import Footer from "./components/footer/Footer";
 import Home from "./views/home/Home";
 import Blog from "./views/blog/Blog";
 import NewBlogPost from "./views/new/New";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadBlogs();
+  }, []);
+
+  useEffect(() => {
+    // Do we have an access token in the URL?
+    const token = new URLSearchParams(window.location.search).get(
+      "accessToken"
+    );
+
+    if (token) {
+      localStorage.setItem("token", token);
+      navigate(window.location.pathname);
+    }
   }, []);
 
   const loadBlogs = async () => {
@@ -40,7 +59,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <>
       <NavBar />
       <Routes>
         <Route path="/" exact element={<Home blogs={blogs} />} />
@@ -48,7 +67,7 @@ function App() {
         <Route path="/new" element={<NewBlogPost />} />
       </Routes>
       <Footer />
-    </Router>
+    </>
   );
 }
 
