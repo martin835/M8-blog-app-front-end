@@ -29,7 +29,7 @@ function App() {
         let data = await response.json();
         console.log(data);
 
-        setBlogs(data);
+        setBlogs(data.data);
         //setIsLoading(false);
       } else {
         alert("something went wrong :(");

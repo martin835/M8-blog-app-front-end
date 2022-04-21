@@ -12,7 +12,7 @@ const NavBar = (props) => {
         </Navbar.Brand>
         <input
           type="button"
-          onClick={console.log("LOG IN!")}
+          onClick={() => console.log("LOG IN!")}
           value="Login"
         ></input>
 
